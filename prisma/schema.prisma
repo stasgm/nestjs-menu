@@ -10,13 +10,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// prisma/schema.prisma
-
+//  MODELS //
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
   description String?
-  disabled    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  disabled    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  menuLine    MenuLine[]
+}
+
+model MenuCategory {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  menus Menu[]
+}
+
+model Menu {
+  id          Int            @id @default(autoincrement())
+  name        String         @unique
+  description String?
+  disabled    Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  lines       MenuLine[]
+  categories  MenuCategory[]
+}
+
+model MenuLine {
+  id        Int      @id @default(autoincrement())
+  price     Float
+  menu      Menu     @relation(fields: [menuId], references: [id])
+  menuId    Int
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int
 }
