@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { ProductEntity } from './entities/products.entity';
+import { ProductEntity } from './entities/product.entity';
 import { ProductService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -19,6 +19,12 @@ import { UpdateProductDto } from './dto/update-product.dto';
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+
+  @ApiCreatedResponse({ type: ProductEntity })
+  @Post()
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productService.create(createProductDto);
+  }
 
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
@@ -30,12 +36,6 @@ export class ProductController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productService.findOne(id);
-  }
-
-  @ApiCreatedResponse({ type: ProductEntity })
-  @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
   }
 
   @Patch(':id')

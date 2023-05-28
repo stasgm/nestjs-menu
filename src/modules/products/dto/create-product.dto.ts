@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Product } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
@@ -7,7 +9,16 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class CreateProductDto {
+export class CreateProductDto implements Product {
+  @Exclude()
+  id: number;
+
+  @Exclude()
+  createdAt: Date;
+
+  @Exclude()
+  updatedAt: Date;
+
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -18,10 +29,10 @@ export class CreateProductDto {
   @IsOptional()
   @IsNotEmpty()
   @MaxLength(300)
-  description?: string;
+  description: string | null;
 
   @ApiProperty({ required: false, default: false })
   @IsBoolean()
   @IsOptional()
-  disabled?: boolean = false;
+  disabled: boolean;
 }
