@@ -1,7 +1,7 @@
 import { MenuCategory } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { MenuEntity } from '../../menus/entities/menu.entity';
-import { NamedBaseEntity } from '../../shared/namedBaseEntity';
+import { NamedBaseEntity } from '../../shared/named.base.entity';
 
 export class MenuCategoryEntity
   extends NamedBaseEntity

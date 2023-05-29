@@ -8,6 +8,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
+import { ProductExists } from '../validation-rules/product-exists.rule';
 
 export class CreateProductDto implements Product {
   @Exclude()
@@ -22,6 +23,7 @@ export class CreateProductDto implements Product {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @ProductExists()
   name: string;
 
   @ApiProperty({ required: false })

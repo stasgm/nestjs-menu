@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -34,8 +35,14 @@ export class ProductController {
 
   @ApiOkResponse({ type: ProductEntity })
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const res = await this.productService.findOne(id);
+
+    if (!res) {
+      throw new NotFoundException();
+    }
+
+    return res;
   }
 
   @Patch(':id')
