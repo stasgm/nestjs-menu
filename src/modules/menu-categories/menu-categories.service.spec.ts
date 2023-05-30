@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MenuCategoriesService } from './menu-categories.service';
-import { MenuCategoryRepository } from './menu-categories.repository';
+
 import { PrismaService } from '../core/prisma/prisma.service';
+import { MenuCategoryRepository } from './menu-categories.repository';
+import { MenuCategoriesService } from './menu-categories.service';
 
 describe('MenuCategoriesService', () => {
   let service: MenuCategoriesService;

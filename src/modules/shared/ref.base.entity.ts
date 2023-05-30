@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+
 import { NamedBaseEntity } from './named.base.entity';
 
 export class RefBaseEntity extends NamedBaseEntity {

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
+
 import { MenuCategoryExists } from '../validation-rules/menu-category-exists.rule';
 
 // import { PickType } from '@nestjs/swagger';

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { CreateMenuCategoryDto } from './dto/create-menu-category.dto';
 import { UpdateMenuCategoryDto } from './dto/update-menu-category.dto';
 import { MenuCategoryRepository } from './menu-categories.repository';

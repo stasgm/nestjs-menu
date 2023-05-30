@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, MenuCategory } from '@prisma/client';
+import { MenuCategory, Prisma } from '@prisma/client';
+
 import { PrismaService } from '../core/prisma/prisma.service';
 
 @Injectable()
 export class MenuCategoryRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createMenuCategory(params: {
-    data: Prisma.MenuCategoryCreateInput;
-  }): Promise<MenuCategory> {
+  async createMenuCategory(params: { data: Prisma.MenuCategoryCreateInput }): Promise<MenuCategory> {
     const { data } = params;
 
     return this.prisma.menuCategory.create({ data });
@@ -48,9 +47,7 @@ export class MenuCategoryRepository {
     return this.prisma.menuCategory.update({ where, data });
   }
 
-  async deleteMenuCategory(params: {
-    where: Prisma.MenuCategoryWhereUniqueInput;
-  }): Promise<MenuCategory> {
+  async deleteMenuCategory(params: { where: Prisma.MenuCategoryWhereUniqueInput }): Promise<MenuCategory> {
     const { where } = params;
     return this.prisma.menuCategory.delete({ where });
   }

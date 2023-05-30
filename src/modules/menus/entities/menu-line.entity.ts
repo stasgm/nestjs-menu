@@ -1,7 +1,8 @@
-import { MenuLine } from '@prisma/client';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { MenuEntity } from './menu.entity';
+import { MenuLine } from '@prisma/client';
+
 import { ProductEntity } from '../../products/entities/product.entity';
+import { MenuEntity } from './menu.entity';
 
 export class MenuLineEntity implements MenuLine {
   @ApiProperty({ type: Number })

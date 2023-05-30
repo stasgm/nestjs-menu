@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { AppConfig } from './AppConfig';
+import { AppConfig } from './app-config';
 
 export default (app: INestApplication) => {
   const options = new DocumentBuilder()

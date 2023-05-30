@@ -1,8 +1,9 @@
 import { Test } from '@nestjs/testing';
 import { PrismaClient } from '@prisma/client';
+import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
+
 import { PrismaService } from '../core/prisma/prisma.service';
 import { MenuCategoryRepository } from './menu-categories.repository';
-import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 
 describe(`MenuCategoryRepository`, () => {
   let menuCategoryRepository: MenuCategoryRepository;

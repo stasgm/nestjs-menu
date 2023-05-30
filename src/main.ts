@@ -1,18 +1,11 @@
+import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
-import {
-  ClassSerializerInterceptor,
-  ValidationPipe,
-  Logger,
-  ValidationError,
-} from '@nestjs/common';
-
-import setupSwagger from './modules/core/setupSwagger';
-import { AppModule } from './app.module';
-import { AppConfig } from './modules/core/AppConfig';
-import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 import { useContainer } from 'class-validator';
+
+import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './exceptions/prisma-client-exception/prisma-client-exception.filter';
-import { BadRequestExceptionFilter } from './exceptions/bad-request-exception.filter';
+import { AppConfig } from './modules/core/app-config';
+import setupSwagger from './modules/core/setup-swagger';
 
 async function bootstrap() {
   const logger = new Logger();
@@ -34,8 +27,6 @@ async function bootstrap() {
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
-  // app.useGlobalFilters(new BadRequestExceptionFilter());
-  // app.useGlobalFilters(new HttpExceptionFilter());
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
@@ -55,6 +46,7 @@ async function bootstrap() {
 }
 bootstrap()
   .then()
-  .catch((err) => {
-    console.error(`An error occured, ${err}`);
+  .catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error(`An error occured, ${error}`);
   });

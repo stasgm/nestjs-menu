@@ -1,6 +1,7 @@
-import { Product } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
-import { MenuLineEntity } from '../../menus/entities/menuLine.entity';
+import { Product } from '@prisma/client';
+
+import { MenuLineEntity } from '../../menus/entities/menu-line.entity';
 import { RefBaseEntity } from '../../shared/ref.base.entity';
 
 export class ProductEntity extends RefBaseEntity implements Product {

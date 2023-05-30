@@ -1,10 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  HttpStatus,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ArgumentsHost, BadRequestException, Catch, HttpStatus, NotFoundException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Prisma } from '@prisma/client';
 import { Response } from 'express';
@@ -14,9 +8,6 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const message = exception.message.replace(/\n/g, '');
-
-    console.error(message);
 
     switch (exception.code) {
       case 'P2002': {
@@ -39,10 +30,11 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         });
         break;
       }
-      default:
+      default: {
         // default 500 error code
         super.catch(exception, host);
         break;
+      }
     }
   }
 }

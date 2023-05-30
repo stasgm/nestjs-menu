@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MenuCategoriesController } from './menu-categories.controller';
-import { MenuCategoriesService } from './menu-categories.service';
+
 import { PrismaService } from '../core/prisma/prisma.service';
+import { MenuCategoriesController } from './menu-categories.controller';
 import { MenuCategoryRepository } from './menu-categories.repository';
+import { MenuCategoriesService } from './menu-categories.service';
 
 describe('MenuCategoriesController', () => {
   let controller: MenuCategoriesController;

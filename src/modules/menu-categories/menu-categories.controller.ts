@@ -1,19 +1,10 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
-  NotFoundException,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { MenuCategoriesService } from './menu-categories.service';
+
 import { CreateMenuCategoryDto } from './dto/create-menu-category.dto';
 import { UpdateMenuCategoryDto } from './dto/update-menu-category.dto';
 import { MenuCategoryEntity } from './entities/menu-category.entity';
+import { MenuCategoriesService } from './menu-categories.service';
 
 @Controller('menu-categories')
 @ApiTags('Menu-categories')
@@ -23,18 +14,14 @@ export class MenuCategoriesController {
   @Post()
   @ApiCreatedResponse({ type: MenuCategoryEntity })
   async create(@Body() createMenuCategoryDto: CreateMenuCategoryDto) {
-    return new MenuCategoryEntity(
-      await this.menuCategoriesService.create(createMenuCategoryDto),
-    );
+    return new MenuCategoryEntity(await this.menuCategoriesService.create(createMenuCategoryDto));
   }
 
   @ApiOkResponse({ type: MenuCategoryEntity, isArray: true })
   @Get()
   async findAll() {
     const menuCategories = await this.menuCategoriesService.findAll();
-    return menuCategories.map(
-      (menuCategory) => new MenuCategoryEntity(menuCategory),
-    );
+    return menuCategories.map((menuCategory) => new MenuCategoryEntity(menuCategory));
   }
 
   @Get(':id')
@@ -51,13 +38,8 @@ export class MenuCategoriesController {
 
   @Patch(':id')
   @ApiCreatedResponse({ type: MenuCategoryEntity })
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateMenuCategoryDto: UpdateMenuCategoryDto,
-  ) {
-    return new MenuCategoryEntity(
-      await this.menuCategoriesService.update(id, updateMenuCategoryDto),
-    );
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateMenuCategoryDto: UpdateMenuCategoryDto) {
+    return new MenuCategoryEntity(await this.menuCategoriesService.update(id, updateMenuCategoryDto));
   }
 
   @Delete(':id')

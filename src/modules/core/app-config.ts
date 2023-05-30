@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as config from 'config';
+
 import { PGCredentials } from '../../types';
 
 @Injectable()
@@ -9,9 +10,7 @@ export class AppConfig {
   }
 
   get postgres(): PGCredentials {
-    const postgres: Record<string, unknown> = config.has('postgres')
-      ? config.get('postgres')
-      : {};
+    const postgres: Record<string, unknown> = config.has('postgres') ? config.get('postgres') : {};
 
     return {
       host: (postgres.host || process.env.POSTGRES_HOST) as string,

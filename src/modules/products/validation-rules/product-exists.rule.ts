@@ -4,6 +4,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
+
 import { ProductsRepository } from '../products.repository';
 
 @ValidatorConstraint({ name: 'ProductExists', async: true })
