@@ -7,29 +7,29 @@ import {
 
 import { MenuCategoryRepository } from '../menu-categories.repository';
 
-@ValidatorConstraint({ name: 'MenuCategoryExists', async: true })
-export class MenuCategoryExistsRule implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'MenuCategoryNotExists', async: true })
+export class MenuCategoryNotExistsRule implements ValidatorConstraintInterface {
   constructor(private readonly repository: MenuCategoryRepository) {}
 
   async validate(name: string) {
     const menuCategory = await this.repository.getByName(name);
-    return !!menuCategory;
+    return !menuCategory;
   }
 
   defaultMessage() {
-    return 'Menu category does not exist';
+    return 'Menu category already exists';
   }
 }
 
-export function MenuCategoryExists(validationOptions?: ValidationOptions) {
+export function MenuCategoryNotExists(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'MenuCategoryExists',
+      name: 'MenuCategoryNotExists',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: MenuCategoryExistsRule,
+      validator: MenuCategoryNotExistsRule,
     });
   };
 }

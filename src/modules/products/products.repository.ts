@@ -13,11 +13,15 @@ export class ProductsRepository {
     return this.prisma.product.create({ data });
   }
 
-  getByName(name: string) {
+  getProductByName(name: string): Promise<Product | null> {
     return this.prisma.product.findUnique({ where: { name } });
   }
 
-  getProduct(params: { where: Prisma.ProductWhereUniqueInput }) {
+  getProductById(id: number): Promise<Product | null> {
+    return this.prisma.product.findUnique({ where: { id } });
+  }
+
+  getProduct(params: { where: Prisma.ProductWhereUniqueInput }): Promise<Product | null> {
     const { where } = params;
     return this.prisma.product.findUnique({ where });
   }

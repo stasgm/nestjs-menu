@@ -10,12 +10,6 @@ export class MenuCategoryEntity extends NamedBaseEntity implements MenuCategory 
     Object.assign(this, partial);
   }
 
-  // @ApiProperty({ type: Number })
-  // id: number;
-
-  // @ApiProperty({ type: String })
-  // name: string;
-
   @ApiProperty({ isArray: true, type: () => MenuEntity })
   menus: MenuEntity[];
 }

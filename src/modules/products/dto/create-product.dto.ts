@@ -3,7 +3,7 @@ import { Product } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
-import { ProductExists } from '../validation-rules/product-exists.rule';
+import { ProductNotExists } from '../validation-rules/product-not-exists.rule';
 
 export class CreateProductDto implements Product {
   @Exclude()
@@ -18,7 +18,7 @@ export class CreateProductDto implements Product {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @ProductExists()
+  @ProductNotExists()
   name: string;
 
   @ApiProperty({ required: false })

@@ -7,13 +7,14 @@ import { PrismaClientExceptionFilter } from './exceptions/prisma-client-exceptio
 import { AppConfig } from './modules/core/app-config';
 import setupSwagger from './modules/core/setup-swagger';
 
-async function bootstrap() {
-  const logger = new Logger();
+async function bootstrap(): Promise<string> {
   const appConfig = new AppConfig();
 
   const port = appConfig.nestPort;
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -22,6 +23,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
   app.setGlobalPrefix(AppConfig.nestApiGlobalPrefix);
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
@@ -34,7 +36,7 @@ async function bootstrap() {
 
   await app.listen(port);
 
-  logger.log(`
+  return `
   \nApplication is running.
     - port: ${port}
     - env: ${appConfig.envPrefix}
@@ -42,11 +44,14 @@ async function bootstrap() {
     - db port: ${appConfig.postgres.port}
     - db user: ${appConfig.postgres.user}
     - db name: ${appConfig.postgres.dbname}
-  `);
+  `;
 }
-bootstrap()
-  .then()
-  .catch((error) => {
-    // eslint-disable-next-line no-console
-    console.error(`An error occured, ${error}`);
-  });
+
+(async () => {
+  try {
+    const url = await bootstrap();
+    Logger.log(url, 'Bootstrap');
+  } catch (error) {
+    Logger.error(error, 'Bootstrap');
+  }
+})();

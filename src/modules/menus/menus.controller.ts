@@ -1,8 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, NotFoundException, Param, ParseIntPipe } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { CreateMenuDto } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
+// import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+// import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { MenuCategoryEntity } from '../menu-categories/entities/menu-category.entity';
+// import { CreateMenuDto } from './dto/create-menu.dto';
+// import { UpdateMenuDto } from './dto/update-menu.dto';
+import { MenuEntity } from './entities/menu.entity';
 import { MenusService } from './menus.service';
 
 @ApiTags('Menus')
@@ -10,28 +14,37 @@ import { MenusService } from './menus.service';
 export class MenusController {
   constructor(private readonly menusService: MenusService) {}
 
-  @Post()
-  create(@Body() createMenuDto: CreateMenuDto) {
-    return this.menusService.create(createMenuDto);
-  }
+  // @Post()
+  // @ApiCreatedResponse({ type: MenuEntity })
+  // create(@Body() createMenuDto: CreateMenuDto) {
+  //   return this.menusService.create(createMenuDto);
+  // }
 
   @Get()
+  @ApiOkResponse({ type: MenuEntity, isArray: true })
   findAll() {
     return this.menusService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.menusService.findOne(+id);
+  @ApiOkResponse({ type: MenuEntity })
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const res = await this.menusService.findByID(id);
+
+    if (!res) {
+      throw new NotFoundException();
+    }
+
+    return new MenuCategoryEntity(res);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
-    return this.menusService.update(+id, updateMenuDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
+  //   return this.menusService.update(+id, updateMenuDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.menusService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.menusService.remove(+id);
+  // }
 }

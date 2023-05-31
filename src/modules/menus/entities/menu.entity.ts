@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Menu } from '@prisma/client';
+import { IsOptional } from 'class-validator';
 
 import { MenuCategoryEntity } from '../../menu-categories/entities/menu-category.entity';
 import { RefBaseEntity } from '../../shared/ref.base.entity';
@@ -13,7 +14,8 @@ export class MenuEntity extends RefBaseEntity implements Menu {
   disabled: boolean;
 
   @ApiProperty({ isArray: true, type: () => MenuLineEntity })
-  lines: MenuLineEntity[];
+  @IsOptional()
+  lines?: MenuLineEntity[];
 
   @ApiProperty({ isArray: true, type: () => MenuCategoryEntity })
   categories: MenuCategoryEntity[];

@@ -1,27 +1,35 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateMenuDto } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
+// import { CreateMenuDto } from './dto/create-menu.dto';
+// import { UpdateMenuDto } from './dto/update-menu.dto';
+import { MenuRepository } from './menus.repository';
 
 @Injectable()
 export class MenusService {
-  create(createMenuDto: CreateMenuDto) {
-    return 'This action adds a new menu';
-  }
+  constructor(private menuRepository: MenuRepository) {}
+
+  // create(createMenuDto: CreateMenuDto) {
+  //   return this.menuRepository.createMenu({
+  //     data: createMenuDto,
+  //   });
+  // }
 
   findAll() {
-    return `This action returns all menus`;
+    return this.menuRepository.getMenus({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menu`;
+  findByID(id: number) {
+    return this.menuRepository.getMenu({ where: { id } });
   }
 
-  update(id: number, updateMenuDto: UpdateMenuDto) {
-    return `This action updates a #${id} menu`;
-  }
+  // update(id: number, updateMenuDto: UpdateMenuDto) {
+  //   return this.menuRepository.updateMenu({
+  //     where: { id },
+  //     data: updateMenuDto,
+  //   });
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} menu`;
-  }
+  // remove(id: number) {
+  //   return this.menuRepository.deleteMenu({ where: { id } });
+  // }
 }

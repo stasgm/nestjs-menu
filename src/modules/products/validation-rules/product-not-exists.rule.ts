@@ -7,12 +7,12 @@ import {
 
 import { ProductsRepository } from '../products.repository';
 
-@ValidatorConstraint({ name: 'ProductExists', async: true })
-export class ProductExistsRule implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'ProductNotExists', async: true })
+export class ProductNotExistsRule implements ValidatorConstraintInterface {
   constructor(private readonly repository: ProductsRepository) {}
 
   async validate(name: string) {
-    const product = await this.repository.getByName(name);
+    const product = await this.repository.getProductByName(name);
     return !product;
   }
 
@@ -21,7 +21,7 @@ export class ProductExistsRule implements ValidatorConstraintInterface {
   }
 }
 
-export function ProductExists(validationOptions?: ValidationOptions) {
+export function ProductNotExists(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
       name: 'ProductExists',
@@ -29,7 +29,7 @@ export function ProductExists(validationOptions?: ValidationOptions) {
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: ProductExistsRule,
+      validator: ProductNotExistsRule,
     });
   };
 }

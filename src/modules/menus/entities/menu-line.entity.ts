@@ -2,12 +2,10 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { MenuLine } from '@prisma/client';
 
 import { ProductEntity } from '../../products/entities/product.entity';
+import { BaseEntity } from '../../shared/base.entity';
 import { MenuEntity } from './menu.entity';
 
-export class MenuLineEntity implements MenuLine {
-  @ApiProperty({ type: Number })
-  id: number;
-
+export class MenuLineEntity extends BaseEntity implements MenuLine {
   @ApiProperty({ type: Number })
   price: number;
 
@@ -18,7 +16,7 @@ export class MenuLineEntity implements MenuLine {
   menuId: number;
 
   @ApiPropertyOptional({ type: () => ProductEntity })
-  product?: ProductEntity;
+  product: ProductEntity;
 
   @ApiProperty({ type: Number })
   productId: number;
