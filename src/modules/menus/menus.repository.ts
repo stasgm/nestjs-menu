@@ -3,6 +3,7 @@ import { Menu, Prisma } from '@prisma/client';
 
 // import { Menu, MenuLine, Prisma } from '@prisma/client';
 import { PrismaService } from '../core/prisma/prisma.service';
+import { CreateMenuDto } from './dto/create-menu.dto';
 
 const menuInclude = Prisma.validator<Prisma.MenuInclude>()({
   _count: {
@@ -25,10 +26,20 @@ const menuInclude = Prisma.validator<Prisma.MenuInclude>()({
 export class MenuRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createMenu(params: { data: Prisma.MenuCreateInput }): Promise<Menu> {
-    const { data } = params;
+  async createMenu(params: { createMenuDto: CreateMenuDto }): Promise<Menu> {
+    const { createMenuDto } = params;
 
-    return this.prisma.menu.create({ data });
+    const categories = this.connectCategoriesById(createMenuDto.categories);
+
+    return this.prisma.menu.create({
+      data: {
+        ...createMenuDto,
+        categories,
+      },
+      include: {
+        categories: { select: { name: true } },
+      },
+    });
   }
 
   getMenuByName(name: string): Promise<Menu | null> {
@@ -114,4 +125,13 @@ export class MenuRepository {
   //   const { where } = params;
   //   return this.prisma.menuLine.delete({ where });
   // }
+
+  /**
+   * Format the categories IDs array into the prisma query way
+   */
+  connectCategoriesById(category: number[] | undefined): Prisma.MenuCategoryUncheckedCreateNestedManyWithoutMenusInput {
+    return {
+      connect: category?.map((id) => ({ id })) || [],
+    };
+  }
 }

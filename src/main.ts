@@ -21,6 +21,7 @@ async function bootstrap(): Promise<string> {
       validateCustomDecorators: true,
       whitelist: true,
       transform: true,
+      stopAtFirstError: true,
     }),
   );
 

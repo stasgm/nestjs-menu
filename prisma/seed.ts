@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { PrismaClient } from '@prisma/client';
 
 // initialize Prisma Client
@@ -167,8 +168,9 @@ async function main() {
 
 // execute the main function
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((error) => {
+    console.error(error);
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   })
   .finally(async () => {

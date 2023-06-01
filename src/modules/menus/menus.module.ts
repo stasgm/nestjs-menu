@@ -4,11 +4,11 @@ import { PrismaModule } from '../core/prisma/prisma.module';
 import { MenusController } from './menus.controller';
 import { MenuRepository } from './menus.repository';
 import { MenusService } from './menus.service';
-import { MenuExistsRule } from './validation-rules/menu-exists.rule';
+import { IsMenuNotExistRule, MenuExistsRule } from './validation-rules/';
 
 @Module({
   controllers: [MenusController],
-  providers: [MenusService, MenuRepository, MenuExistsRule],
+  providers: [MenusService, MenuRepository, MenuExistsRule, IsMenuNotExistRule],
   imports: [PrismaModule],
 })
 export class MenusModule {}

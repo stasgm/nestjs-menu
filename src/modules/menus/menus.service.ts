@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-// import { CreateMenuDto } from './dto/create-menu.dto';
+import { CreateMenuDto } from './dto/create-menu.dto';
 // import { UpdateMenuDto } from './dto/update-menu.dto';
 import { MenuRepository } from './menus.repository';
 
@@ -8,11 +8,9 @@ import { MenuRepository } from './menus.repository';
 export class MenusService {
   constructor(private menuRepository: MenuRepository) {}
 
-  // create(createMenuDto: CreateMenuDto) {
-  //   return this.menuRepository.createMenu({
-  //     data: createMenuDto,
-  //   });
-  // }
+  create(createMenuDto: CreateMenuDto) {
+    return this.menuRepository.createMenu({ createMenuDto });
+  }
 
   findAll() {
     return this.menuRepository.getMenus({});

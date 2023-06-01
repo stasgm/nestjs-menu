@@ -3,15 +3,15 @@ import { MenuCategory } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-import { MenuCategoryNotExists } from '../validation-rules/menu-category-not-exists.rule';
+import { IsMenuCategoryNotExist } from '../validation-rules/is-menu-category-not-exist.rule';
 
 export class CreateMenuCategoryDto implements MenuCategory {
   @Exclude()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
-  @MenuCategoryNotExists()
+  @IsMenuCategoryNotExist()
   name: string;
 }

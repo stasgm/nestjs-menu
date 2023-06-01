@@ -4,13 +4,12 @@ import { PrismaModule } from '../core/prisma/prisma.module';
 import { MenuCategoriesController } from './menu-categories.controller';
 import { MenuCategoryRepository } from './menu-categories.repository';
 import { MenuCategoriesService } from './menu-categories.service';
-import { MenuCategoryExistsRule } from './validation-rules/menu-category-exists.rule';
-import { MenuCategoryNotExistsRule } from './validation-rules/menu-category-not-exists.rule';
+import { IsMenuCategoryNotExistRule, MenuCategoryExistsRule } from './validation-rules';
 
 @Module({
   controllers: [MenuCategoriesController],
-  providers: [MenuCategoryRepository, MenuCategoriesService, MenuCategoryExistsRule, MenuCategoryNotExistsRule],
+  providers: [MenuCategoryRepository, MenuCategoriesService, MenuCategoryExistsRule, IsMenuCategoryNotExistRule],
   imports: [PrismaModule],
-  exports: [MenuCategoryExistsRule, MenuCategoryNotExistsRule],
+  exports: [MenuCategoryExistsRule, IsMenuCategoryNotExistRule],
 })
 export class MenuCategoriesModule {}

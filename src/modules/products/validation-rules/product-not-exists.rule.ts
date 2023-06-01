@@ -24,7 +24,7 @@ export class ProductNotExistsRule implements ValidatorConstraintInterface {
 export function ProductNotExists(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'ProductExists',
+      name: 'productExists',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,

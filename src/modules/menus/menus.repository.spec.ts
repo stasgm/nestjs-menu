@@ -7,7 +7,7 @@ import { CreateMenuDto } from './dto/create-menu.dto';
 import { MenuRepository } from './menus.repository';
 
 describe(`MenuRepository`, () => {
-  let menuCategoryRepository: MenuRepository;
+  let menuRepository: MenuRepository;
   let prismaService: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
@@ -18,30 +18,30 @@ describe(`MenuRepository`, () => {
       .useValue(mockDeep<PrismaClient>())
       .compile();
 
-    menuCategoryRepository = moduleRef.get(MenuRepository);
+    menuRepository = moduleRef.get(MenuRepository);
     prismaService = moduleRef.get(PrismaService);
   });
 
-  describe(`createMenuCategory`, () => {
-    it(`should create a new menu category`, async () => {
-      const mockedMenuCategory: CreateMenuDto = {
+  describe(`createMenu`, () => {
+    it(`should create a new menu`, async () => {
+      const mockedMenu: CreateMenuDto = {
         id: 1,
         name: 'New menu',
         createdAt: new Date(),
         updatedAt: new Date(),
         disabled: false,
         description: 'new menu',
-        categories: {},
+        categories: [1, 2],
       };
 
-      prismaService.menu.create.mockResolvedValue(mockedMenuCategory);
+      prismaService.menu.create.mockResolvedValue(mockedMenu);
 
-      const createMenuCategory = () =>
-        menuCategoryRepository.createMenu({
-          data: { name: mockedMenuCategory.name },
+      const createMenu = () =>
+        menuRepository.createMenu({
+          createMenuDto: mockedMenu,
         });
 
-      await expect(createMenuCategory()).resolves.toBe(mockedMenuCategory);
+      await expect(createMenu()).resolves.toBe(mockedMenu);
     });
   });
 });

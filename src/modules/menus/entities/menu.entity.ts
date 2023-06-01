@@ -15,7 +15,7 @@ export class MenuEntity extends RefBaseEntity implements Menu {
 
   @ApiProperty({ isArray: true, type: () => MenuLineEntity })
   @IsOptional()
-  lines?: MenuLineEntity[];
+  lines: MenuLineEntity[];
 
   @ApiProperty({ isArray: true, type: () => MenuCategoryEntity })
   categories: MenuCategoryEntity[];

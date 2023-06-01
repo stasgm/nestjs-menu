@@ -7,8 +7,8 @@ import {
 
 import { MenuCategoryRepository } from '../menu-categories.repository';
 
-@ValidatorConstraint({ name: 'MenuCategoryNotExists', async: true })
-export class MenuCategoryNotExistsRule implements ValidatorConstraintInterface {
+@ValidatorConstraint({ async: true })
+export class IsMenuCategoryNotExistRule implements ValidatorConstraintInterface {
   constructor(private readonly repository: MenuCategoryRepository) {}
 
   async validate(name: string) {
@@ -21,15 +21,15 @@ export class MenuCategoryNotExistsRule implements ValidatorConstraintInterface {
   }
 }
 
-export function MenuCategoryNotExists(validationOptions?: ValidationOptions) {
+export function IsMenuCategoryNotExist(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'MenuCategoryNotExists',
+      name: 'isMenuCategoryNotExist',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: MenuCategoryNotExistsRule,
+      validator: IsMenuCategoryNotExistRule,
     });
   };
 }
