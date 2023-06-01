@@ -130,8 +130,10 @@ export class MenuRepository {
    * Format the categories IDs array into the prisma query way
    */
   connectCategoriesById(category: number[] | undefined): Prisma.MenuCategoryUncheckedCreateNestedManyWithoutMenusInput {
+    const categories = category?.map((id) => ({ id }));
+
     return {
-      connect: category?.map((id) => ({ id })) || [],
+      connect: categories,
     };
   }
 }
