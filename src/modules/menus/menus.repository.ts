@@ -26,14 +26,14 @@ const menuInclude = Prisma.validator<Prisma.MenuInclude>()({
 export class MenuRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createMenu(params: { createMenuDto: CreateMenuDto }): Promise<Menu> {
-    const { createMenuDto } = params;
+  async createMenu(params: { data: CreateMenuDto }): Promise<Menu> {
+    const { data } = params;
 
-    const categories = this.connectCategoriesById(createMenuDto.categories);
+    const categories = this.connectCategoriesById(data.categories);
 
     return this.prisma.menu.create({
       data: {
-        ...createMenuDto,
+        ...data,
         categories,
       },
       include: {

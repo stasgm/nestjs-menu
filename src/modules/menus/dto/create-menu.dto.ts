@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Menu } from '@prisma/client';
-import { Exclude } from 'class-transformer';
+import { Prisma } from '@prisma/client';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -15,15 +14,15 @@ import {
 import { MenuCategoryExists } from '../../menu-categories/validation-rules';
 import { IsMenuNotExist } from '../validation-rules/is-menu-not-exists.rule';
 
-export class CreateMenuDto implements Menu {
-  @Exclude()
-  id: number;
+export class CreateMenuDto {
+  // @Exclude()
+  // id: number;
 
-  @Exclude()
-  createdAt: Date;
+  // @Exclude()
+  // createdAt: Date;
 
-  @Exclude()
-  updatedAt: Date;
+  // @Exclude()
+  // updatedAt: Date;
 
   @ApiProperty()
   @IsMenuNotExist()
@@ -41,6 +40,10 @@ export class CreateMenuDto implements Menu {
   @IsOptional()
   @IsBoolean()
   disabled: boolean;
+
+  @ApiProperty({ required: false, default: {} })
+  @IsOptional()
+  products: Prisma.NullableJsonNullValueInput | Prisma.InputJsonValue | undefined;
 
   // @ApiProperty()
   // lines: Prisma.MenuCategorySelect[];

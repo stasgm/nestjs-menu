@@ -8,8 +8,8 @@ import { MenuRepository } from './menus.repository';
 export class MenusService {
   constructor(private menuRepository: MenuRepository) {}
 
-  create(createMenuDto: CreateMenuDto) {
-    return this.menuRepository.createMenu({ createMenuDto });
+  create(data: CreateMenuDto) {
+    return this.menuRepository.createMenu({ data });
   }
 
   findAll() {

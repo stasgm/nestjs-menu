@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { PrismaClient } from '@prisma/client';
+import { Menu, PrismaClient } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 
 import { PrismaService } from '../core/prisma/prisma.service';
@@ -22,26 +22,34 @@ describe(`MenuRepository`, () => {
     prismaService = moduleRef.get(PrismaService);
   });
 
-  describe(`createMenu`, () => {
-    it(`should create a new menu`, async () => {
-      const mockedMenu: CreateMenuDto = {
-        id: 1,
+  describe('createMenu', () => {
+    it('should create a new menu', async () => {
+      const mockedMenuDto: CreateMenuDto = {
         name: 'New menu',
-        createdAt: new Date(),
-        updatedAt: new Date(),
         disabled: false,
         description: 'new menu',
         categories: [1, 2],
+        products: undefined,
       };
 
-      prismaService.menu.create.mockResolvedValue(mockedMenu);
+      const mockedMenuResult: Menu = {
+        id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        name: mockedMenuDto.name,
+        description: mockedMenuDto.description,
+        disabled: mockedMenuDto.disabled,
+        products: null,
+      };
 
-      const createMenu = () =>
+      prismaService.menu.create.mockResolvedValue(mockedMenuResult);
+
+      const createMenu = async () =>
         menuRepository.createMenu({
-          createMenuDto: mockedMenu,
+          data: mockedMenuDto,
         });
 
-      await expect(createMenu()).resolves.toBe(mockedMenu);
+      await expect(createMenu()).resolves.toBe(mockedMenuResult);
     });
   });
 });

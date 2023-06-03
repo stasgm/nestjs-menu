@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { INestApplication, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { INestApplication, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+export class PrismaService extends PrismaClient implements OnModuleInit {
   logger = new Logger(PrismaService.name);
 
   constructor() {
@@ -29,9 +29,5 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     this.$on('beforeExit', async () => {
       await app.close();
     });
-  }
-
-  async onModuleDestroy() {
-    await this.$disconnect();
   }
 }
