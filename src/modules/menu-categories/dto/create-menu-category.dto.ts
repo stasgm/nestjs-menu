@@ -1,14 +1,11 @@
+import { OmitType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { MenuCategory } from '@prisma/client';
-import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 
+import { MenuCategoryEntity } from '../entities/menu-category.entity';
 import { IsMenuCategoryNotExist } from '../validation-rules/is-menu-category-not-exist.rule';
 
-export class CreateMenuCategoryDto implements MenuCategory {
-  @Exclude()
-  id: number;
-
+export class CreateMenuCategoryDto extends OmitType(MenuCategoryEntity, ['id', 'menus']) {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()

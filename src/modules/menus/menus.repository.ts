@@ -30,10 +30,12 @@ export class MenuRepository {
     const { data } = params;
 
     const categories = this.connectCategoriesById(data.categories);
+    const lines = {};
 
     return this.prisma.menu.create({
       data: {
         ...data,
+        lines,
         categories,
       },
       include: {

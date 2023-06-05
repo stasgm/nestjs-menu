@@ -29,7 +29,8 @@ describe(`MenuRepository`, () => {
         disabled: false,
         description: 'new menu',
         categories: [1, 2],
-        products: undefined,
+        products: {},
+        // lines: [],
       };
 
       const mockedMenuResult: Menu = {

@@ -10,15 +10,15 @@ describe(`MenuCategoryRepository`, () => {
   let prismaService: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       providers: [MenuCategoryRepository, PrismaService],
     })
       .overrideProvider(PrismaService)
       .useValue(mockDeep<PrismaClient>())
       .compile();
 
-    menuCategoryRepository = moduleRef.get(MenuCategoryRepository);
-    prismaService = moduleRef.get(PrismaService);
+    menuCategoryRepository = module.get(MenuCategoryRepository);
+    prismaService = module.get(PrismaService);
   });
 
   describe(`createMenuCategory`, () => {

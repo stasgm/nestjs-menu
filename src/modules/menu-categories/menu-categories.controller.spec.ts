@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaClient } from '@prisma/client';
+import { mockDeep } from 'jest-mock-extended';
 
 import { PrismaService } from '../core/prisma/prisma.service';
 import { MenuCategoriesController } from './menu-categories.controller';
@@ -11,8 +13,11 @@ describe('MenuCategoriesController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MenuCategoriesController],
-      providers: [MenuCategoriesService, MenuCategoryRepository, PrismaService],
-    }).compile();
+      providers: [PrismaService, MenuCategoryRepository, MenuCategoriesService],
+    })
+      .overrideProvider(PrismaService)
+      .useValue(mockDeep<PrismaClient>())
+      .compile();
 
     controller = module.get<MenuCategoriesController>(MenuCategoriesController);
   });

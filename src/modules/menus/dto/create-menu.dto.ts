@@ -1,3 +1,4 @@
+import { OmitType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import {
@@ -12,9 +13,16 @@ import {
 } from 'class-validator';
 
 import { MenuCategoryExists } from '../../menu-categories/validation-rules';
+import { MenuEntity } from '../entities/menu.entity';
 import { IsMenuNotExist } from '../validation-rules/is-menu-not-exists.rule';
 
-export class CreateMenuDto {
+export class CreateMenuDto extends OmitType(MenuEntity, [
+  'id',
+  'products',
+  'categories',
+  'updatedAt',
+  'createdAt',
+] as const) {
   // @Exclude()
   // id: number;
 
