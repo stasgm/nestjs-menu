@@ -18,7 +18,7 @@ model Product {
   disabled    Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  menuLine    MenuLine[]
+  // menuLine    MenuLine[]
 }
 
 model MenuCategory {
@@ -35,15 +35,15 @@ model Menu {
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   products    Json?
-  lines       MenuLine[]
+  // lines       MenuLine[]
   categories  MenuCategory[]
 }
 
-model MenuLine {
-  id        Int      @id @default(autoincrement())
-  price     Float
-  menu      Menu     @relation(fields: [menuId], references: [id])
-  menuId    Int
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int
-}
+// model MenuLine {
+//   id        Int      @id @default(autoincrement())
+//   price     Float
+//   menu      Menu     @relation(fields: [menuId], references: [id])
+//   menuId    Int
+//   product   Product? @relation(fields: [productId], references: [id])
+//   productId Int
+// }
