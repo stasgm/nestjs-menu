@@ -9,10 +9,10 @@ import { MenuRepository } from '../menus.repository';
 
 @ValidatorConstraint({ async: true })
 export class MenuExistsRule implements ValidatorConstraintInterface {
-  constructor(private readonly repository: MenuRepository) {}
+  constructor(private readonly menuRepository: MenuRepository) {}
 
   async validate(id: number) {
-    const menu = await this.repository.getMenuById(id);
+    const menu = await this.menuRepository.getMenuById(id);
     return !menu;
   }
 

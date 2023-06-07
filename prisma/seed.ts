@@ -48,7 +48,6 @@ async function main() {
   });
 
   // create menu categories
-
   const category1 = await prisma.menuCategory.upsert({
     where: { id: 1 },
     update: {},
@@ -71,7 +70,7 @@ async function main() {
     where: { id: 3 },
     update: {},
     create: {
-      id: 2,
+      id: 3,
       name: 'Drinks',
     },
   });
@@ -84,29 +83,16 @@ async function main() {
       id: 1,
       name: 'Breakfast',
       description: 'Menu for Breakfast (works 9:00 - 12:00)',
-    },
-  });
-
-  // create menu 1 lines
-  const menuLine1 = await prisma.menuLine.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      id: 1,
-      menuId: 1,
-      productId: 1,
-      price: 100,
-    },
-  });
-
-  const menuLine2 = await prisma.menuLine.upsert({
-    where: { id: 2 },
-    update: {},
-    create: {
-      id: 2,
-      menuId: 1,
-      productId: 2,
-      price: 150,
+      lines: [
+        {
+          productId: 2,
+          price: 150,
+        },
+        {
+          productId: 1,
+          price: 100,
+        },
+      ],
     },
   });
 
@@ -126,29 +112,20 @@ async function main() {
       id: 2,
       name: 'Drinks and beverages',
       description: 'All time',
-    },
-  });
-
-  // create menu 2 lines
-  const menuLine3 = await prisma.menuLine.upsert({
-    where: { id: 3 },
-    update: {},
-    create: {
-      id: 3,
-      menuId: 2,
-      productId: 3,
-      price: 150,
-    },
-  });
-
-  const menuLine4 = await prisma.menuLine.upsert({
-    where: { id: 4 },
-    update: {},
-    create: {
-      id: 4,
-      menuId: 2,
-      productId: 4,
-      price: 250,
+      lines: [
+        {
+          productId: 1,
+          price: 130,
+        },
+        {
+          productId: 4,
+          price: 120,
+        },
+        {
+          productId: 3,
+          price: 110,
+        },
+      ],
     },
   });
 
@@ -162,7 +139,6 @@ async function main() {
 
   console.log({ product1, product2, product3, product4 });
   console.log({ category1, category2, category3 });
-  console.log({ menuLine1, menuLine2, menuLine3, menuLine4 });
   console.log({ menu1, menu2 });
 }
 

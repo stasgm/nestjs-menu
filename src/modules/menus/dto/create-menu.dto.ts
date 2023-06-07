@@ -1,7 +1,8 @@
 import { OmitType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
+import { Type } from 'class-transformer';
 import {
+  ArrayMinSize,
   ArrayNotEmpty,
   IsArray,
   IsBoolean,
@@ -10,28 +11,21 @@ import {
   IsOptional,
   IsString,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
 
 import { MenuCategoryExists } from '../../menu-categories/validation-rules';
 import { MenuEntity } from '../entities/menu.entity';
 import { IsMenuNotExist } from '../validation-rules/is-menu-not-exists.rule';
+import { MenuLineDto } from './create-menu-line.dto';
 
 export class CreateMenuDto extends OmitType(MenuEntity, [
   'id',
-  'products',
+  'lines',
   'categories',
   'updatedAt',
   'createdAt',
 ] as const) {
-  // @Exclude()
-  // id: number;
-
-  // @Exclude()
-  // createdAt: Date;
-
-  // @Exclude()
-  // updatedAt: Date;
-
   @ApiProperty()
   @IsMenuNotExist()
   @IsString()
@@ -49,12 +43,11 @@ export class CreateMenuDto extends OmitType(MenuEntity, [
   @IsBoolean()
   disabled: boolean;
 
-  @ApiProperty({ required: false, default: {} })
-  @IsOptional()
-  products: Prisma.NullableJsonNullValueInput | Prisma.InputJsonValue | undefined;
-
-  // @ApiProperty()
-  // lines: Prisma.MenuCategorySelect[];
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested()
+  @Type(() => MenuLineDto)
+  lines: MenuLineDto[];
 
   @ApiProperty({ isArray: true, default: [] })
   @IsOptional()

@@ -1,25 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Menu, Prisma } from '@prisma/client';
 
-// import { Menu, MenuLine, Prisma } from '@prisma/client';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
+import { MenuLineDto } from './dto/create-menu-line.dto';
 
 const menuInclude = Prisma.validator<Prisma.MenuInclude>()({
   _count: {
     select: {
       categories: true,
-      lines: true,
     },
   },
   categories: true,
-  lines: {
-    select: {
-      id: true,
-      price: true,
-      product: true,
-    },
-  },
 });
 
 @Injectable()
@@ -30,7 +22,7 @@ export class MenuRepository {
     const { data } = params;
 
     const categories = this.connectCategoriesById(data.categories);
-    const lines = {};
+    const lines = this.convertLines(data.lines);
 
     return this.prisma.menu.create({
       data: {
@@ -137,5 +129,14 @@ export class MenuRepository {
     return {
       connect: categories,
     };
+  }
+
+  convertLines(lines: MenuLineDto[]) {
+    const plainLines: Prisma.InputJsonValue = lines.map((line) => ({
+      price: line.price,
+      productId: line.productId,
+    }));
+
+    return plainLines;
   }
 }

@@ -29,8 +29,7 @@ describe(`MenuRepository`, () => {
         disabled: false,
         description: 'new menu',
         categories: [1, 2],
-        products: {},
-        // lines: [],
+        lines: [],
       };
 
       const mockedMenuResult: Menu = {
@@ -40,7 +39,7 @@ describe(`MenuRepository`, () => {
         name: mockedMenuDto.name,
         description: mockedMenuDto.description,
         disabled: mockedMenuDto.disabled,
-        products: null,
+        lines: [],
       };
 
       prismaService.menu.create.mockResolvedValue(mockedMenuResult);

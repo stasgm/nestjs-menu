@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Product } from '@prisma/client';
 import { IsBoolean, IsOptional } from 'class-validator';
 
-import { MenuLineEntity } from '../../menus/entities/menu-line.entity';
 import { RefBaseEntity } from '../../shared/ref.base.entity';
 
 export class ProductEntity extends RefBaseEntity implements Product {
@@ -13,7 +12,4 @@ export class ProductEntity extends RefBaseEntity implements Product {
   @IsOptional()
   @IsBoolean()
   disabled: boolean;
-
-  @ApiProperty({ isArray: true, type: () => MenuLineEntity })
-  menuLine: MenuLineEntity[];
 }

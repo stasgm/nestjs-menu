@@ -11,12 +11,6 @@ import { MenuCategoriesService } from './menu-categories.service';
 export class MenuCategoriesController {
   constructor(private readonly menuCategoriesService: MenuCategoriesService) {}
 
-  @Post()
-  @ApiCreatedResponse({ type: MenuCategoryEntity })
-  async create(@Body() createMenuCategoryDto: CreateMenuCategoryDto) {
-    return new MenuCategoryEntity(await this.menuCategoriesService.create(createMenuCategoryDto));
-  }
-
   @ApiOkResponse({ type: MenuCategoryEntity, isArray: true })
   @Get()
   async findAll() {
@@ -34,6 +28,12 @@ export class MenuCategoriesController {
     }
 
     return new MenuCategoryEntity(res);
+  }
+
+  @Post()
+  @ApiCreatedResponse({ type: MenuCategoryEntity })
+  async create(@Body() createMenuCategoryDto: CreateMenuCategoryDto) {
+    return new MenuCategoryEntity(await this.menuCategoriesService.create(createMenuCategoryDto));
   }
 
   @Patch(':id')

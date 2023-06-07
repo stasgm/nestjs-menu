@@ -26,7 +26,7 @@ CREATE TABLE "Menu" (
     "disabled" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "products" JSONB,
+    "lines" JSONB,
 
     CONSTRAINT "Menu_pkey" PRIMARY KEY ("id")
 );
