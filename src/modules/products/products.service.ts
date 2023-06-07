@@ -5,7 +5,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsRepository } from './products.repository';
 
 @Injectable()
-export class ProductService {
+export class ProductsService {
   constructor(private productsRepository: ProductsRepository) {}
 
   create(createProductDto: CreateProductDto) {

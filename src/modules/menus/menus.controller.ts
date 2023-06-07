@@ -4,6 +4,7 @@ import { ApiCreatedResponse, ApiOkResponse, ApiProperty, ApiTags } from '@nestjs
 import { MenuCategoryEntity } from '../menu-categories/entities/menu-category.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { MenuEntity } from './entities/menu.entity';
+import { MenuPipe } from './menu.pipe';
 import { MenusService } from './menus.service';
 
 @ApiTags('Menus')
@@ -14,7 +15,7 @@ export class MenusController {
   @Post()
   @ApiProperty({ name: 'Create a new menu' })
   @ApiCreatedResponse({ type: MenuEntity })
-  create(@Body() createMenuDto: CreateMenuDto) {
+  create(@Body(MenuPipe) createMenuDto: CreateMenuDto) {
     return this.menusService.create(createMenuDto);
   }
 
