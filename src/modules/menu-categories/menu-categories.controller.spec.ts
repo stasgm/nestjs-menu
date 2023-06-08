@@ -1,4 +1,3 @@
-/* eslint-disable security/detect-possible-timing-attacks */
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { MenuCategoriesController } from './menu-categories.controller';
