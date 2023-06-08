@@ -7,12 +7,6 @@ import { PrismaService } from '../core/prisma/prisma.service';
 export class ProductsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createProduct(params: { data: Prisma.ProductCreateInput }): Promise<Product> {
-    const { data } = params;
-
-    return this.prisma.product.create({ data });
-  }
-
   getProduct(params: { where: Prisma.ProductWhereUniqueInput }): Promise<Product | null> {
     const { where } = params;
     return this.prisma.product.findUnique({ where });
@@ -33,6 +27,12 @@ export class ProductsRepository {
       where,
       orderBy,
     });
+  }
+
+  async createProduct(params: { data: Prisma.ProductCreateInput }): Promise<Product> {
+    const { data } = params;
+
+    return this.prisma.product.create({ data });
   }
 
   async updateProduct(params: {
