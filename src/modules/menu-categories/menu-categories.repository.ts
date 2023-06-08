@@ -13,15 +13,7 @@ export class MenuCategoryRepository {
     return this.prisma.menuCategory.create({ data });
   }
 
-  getById(id: number) {
-    return this.getMenuCategory({ where: { id } });
-  }
-
-  getByName(name: string) {
-    return this.getMenuCategory({ where: { name } });
-  }
-
-  getMenuCategory(params: { where: Prisma.MenuCategoryWhereUniqueInput }) {
+  getMenuCategory(params: { where: Prisma.MenuCategoryWhereUniqueInput }): Promise<MenuCategory | null> {
     const { where } = params;
     return this.prisma.menuCategory.findUnique({ where });
   }

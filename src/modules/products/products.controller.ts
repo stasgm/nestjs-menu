@@ -11,12 +11,6 @@ import { ProductsService } from './products.service';
 export class ProductController {
   constructor(private readonly productService: ProductsService) {}
 
-  @ApiCreatedResponse({ type: ProductEntity })
-  @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
-  }
-
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
   findAll() {
@@ -26,13 +20,19 @@ export class ProductController {
   @ApiOkResponse({ type: ProductEntity })
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const res = await this.productService.findOne(id);
+    const res = await this.productService.findById(id);
 
     if (!res) {
       throw new NotFoundException();
     }
 
     return res;
+  }
+
+  @ApiCreatedResponse({ type: ProductEntity })
+  @Post()
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productService.create(createProductDto);
   }
 
   @Patch(':id')

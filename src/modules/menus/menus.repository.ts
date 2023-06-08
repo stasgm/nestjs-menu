@@ -4,6 +4,7 @@ import { Menu, Prisma } from '@prisma/client';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { MenuLineDto } from './dto/create-menu-line.dto';
+import { UpdateMenuDto } from './dto/update-menu.dto';
 
 const menuInclude = Prisma.validator<Prisma.MenuInclude>()({
   _count: {
@@ -36,18 +37,18 @@ export class MenuRepository {
     });
   }
 
-  getMenuByName(name: string): Promise<Menu | null> {
-    return this.getMenu({ where: { name } });
-  }
+  // getMenuByName(name: string): Promise<Menu | null> {
+  //   return this.getMenu({ where: { name } });
+  // }
 
   getMenu(params: { where: Prisma.MenuWhereUniqueInput }) {
     const { where } = params;
     return this.prisma.menu.findUnique({ where, include: menuInclude });
   }
 
-  getMenuById(id: number): Promise<Menu | null> {
-    return this.getMenu({ where: { id } });
-  }
+  // getMenuById(id: number): Promise<Menu | null> {
+  //   return this.getMenu({ where: { id } });
+  // }
 
   async getMenus(params: {
     skip?: number;
@@ -67,15 +68,29 @@ export class MenuRepository {
     });
   }
 
-  // async updateMenu(params: { where: Prisma.MenuWhereUniqueInput; data: Prisma.MenuUpdateInput }): Promise<Menu> {
-  //   const { where, data } = params;
-  //   return this.prisma.menu.update({ where, data });
-  // }
+  async updateMenu(params: { where: Prisma.MenuWhereUniqueInput; data: UpdateMenuDto }): Promise<Menu | null> {
+    const { where, data } = params;
 
-  // async deleteMenu(params: { where: Prisma.MenuWhereUniqueInput }): Promise<Menu> {
-  //   const { where } = params;
-  //   return this.prisma.menu.delete({ where });
-  // }
+    const categories = this.connectCategoriesById(data.categories);
+    const lines = this.convertLines(data.lines);
+
+    return this.prisma.menu.update({
+      where,
+      data: {
+        ...data,
+        lines,
+        categories,
+      },
+      include: {
+        categories: { select: { name: true } },
+      },
+    });
+  }
+
+  async deleteMenu(params: { where: Prisma.MenuWhereUniqueInput }): Promise<Menu> {
+    const { where } = params;
+    return this.prisma.menu.delete({ where });
+  }
 
   // /** Menu Lines **/
 
@@ -123,7 +138,9 @@ export class MenuRepository {
   /**
    * Format the categories IDs array into the prisma query way
    */
-  connectCategoriesById(category: number[] | undefined): Prisma.MenuCategoryUncheckedCreateNestedManyWithoutMenusInput {
+  private connectCategoriesById(
+    category: number[] | undefined,
+  ): Prisma.MenuCategoryUncheckedCreateNestedManyWithoutMenusInput {
     const categories = category?.map((id) => ({ id }));
 
     return {
@@ -131,8 +148,8 @@ export class MenuRepository {
     };
   }
 
-  convertLines(lines: MenuLineDto[]) {
-    const plainLines: Prisma.InputJsonValue = lines.map((line) => ({
+  private convertLines(lines: MenuLineDto[] | undefined) {
+    const plainLines: Prisma.InputJsonValue | undefined = lines?.map((line) => ({
       price: line.price,
       productId: line.productId,
     }));

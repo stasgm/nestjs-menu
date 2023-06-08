@@ -5,14 +5,14 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 
-import { MenuCategoryRepository } from '../menu-categories.repository';
+import { MenuCategoriesService } from '../menu-categories.service';
 
 @ValidatorConstraint({ async: true })
 export class IsMenuCategoryNotExistRule implements ValidatorConstraintInterface {
-  constructor(private readonly repository: MenuCategoryRepository) {}
+  constructor(private readonly menuCategoriesService: MenuCategoriesService) {}
 
   async validate(name: string) {
-    const menuCategory = await this.repository.getByName(name);
+    const menuCategory = await this.menuCategoriesService.findByName(name);
     return !menuCategory;
   }
 

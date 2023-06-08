@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Product } from '@prisma/client';
 
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -8,16 +9,20 @@ import { ProductsRepository } from './products.repository';
 export class ProductsService {
   constructor(private productsRepository: ProductsRepository) {}
 
-  create(createProductDto: CreateProductDto) {
-    return this.productsRepository.createProduct({ data: createProductDto });
-  }
-
-  findAll() {
+  findAll(): Promise<Product[]> {
     return this.productsRepository.getProducts({});
   }
 
-  findOne(id: number) {
+  findById(id: number): Promise<Product | null> {
     return this.productsRepository.getProduct({ where: { id } });
+  }
+
+  findByName(name: string): Promise<Product | null> {
+    return this.productsRepository.getProduct({ where: { name } });
+  }
+
+  create(createProductDto: CreateProductDto) {
+    return this.productsRepository.createProduct({ data: createProductDto });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
