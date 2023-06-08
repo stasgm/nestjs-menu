@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Product } from '@prisma/client';
+import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -27,29 +28,32 @@ const menuProductsMocked: Product[] = [
 
 describe('ProductService', () => {
   let service: ProductsService;
-  let repository: ProductsRepository;
+  let repository: DeepMockProxy<ProductsRepository>;
 
   beforeEach(async () => {
     jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ProductsService],
+      providers: [ProductsService, ProductsRepository],
     })
-      .useMocker((token) => {
-        if (token === ProductsRepository) {
-          return {
-            getProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
-            getProducts: jest.fn().mockResolvedValue(menuProductsMocked),
-            createProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
-            updateProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
-            deleteProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
-          };
-        }
-        return {};
-      })
+      .overrideProvider(ProductsRepository)
+      .useValue(mockDeep<ProductsRepository>())
       .compile();
+    // .useMocker((token) => {
+    //   if (token === ProductsRepository) {
+    //     return {
+    //       getProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
+    //       getProducts: jest.fn().mockResolvedValue(menuProductsMocked),
+    //       createProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
+    //       updateProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
+    //       deleteProduct: jest.fn().mockResolvedValue(menuProductsMocked[0]),
+    //     };
+    //   }
+    //   return {};
+    // })
+    // .compile();
 
-    service = module.get<ProductsService>(ProductsService);
-    repository = module.get<ProductsRepository>(ProductsRepository);
+    service = module.get(ProductsService);
+    repository = module.get(ProductsRepository);
   });
 
   it('should be defined', () => {
@@ -57,6 +61,7 @@ describe('ProductService', () => {
   });
 
   it('should return the list of products', async () => {
+    repository.getProducts.mockResolvedValue(menuProductsMocked);
     const products = await service.findAll();
 
     expect(repository.getProducts).toHaveBeenCalledTimes(1);
@@ -66,6 +71,7 @@ describe('ProductService', () => {
   });
 
   it('should find by id and return a product', async () => {
+    repository.getProduct.mockResolvedValue(menuProductsMocked[0]);
     const product = await service.findById(menuProductsMocked[0].id);
 
     expect(repository.getProduct).toHaveBeenCalledTimes(1);
@@ -74,7 +80,18 @@ describe('ProductService', () => {
     expect(product?.id).toEqual(menuProductsMocked[0].id);
   });
 
+  // it('should not find by id and throw a ProductNotFoundException', async () => {
+  //   repository.getProduct.mockResolvedValue(null);
+  //   const product = await service.findById(menuProductsMocked[0].id);
+
+  //   expect(repository.getProduct).toHaveBeenCalledTimes(1);
+  //   expect(typeof product).toBe('object');
+  //   expect(product).toBeDefined();
+  //   expect(product?.id).toEqual(menuProductsMocked[0].id);
+  // });
+
   it('should find by name and return a product', async () => {
+    repository.getProduct.mockResolvedValue(menuProductsMocked[0]);
     const product = await service.findByName(menuProductsMocked[0].name);
 
     expect(repository.getProduct).toHaveBeenCalledTimes(1);
@@ -87,6 +104,7 @@ describe('ProductService', () => {
     const createProductDto: CreateProductDto = {
       ...menuProductsMocked[0],
     };
+    repository.createProduct.mockResolvedValue(menuProductsMocked[0]);
     const product = await service.create(createProductDto);
 
     expect(repository.createProduct).toHaveBeenCalledTimes(1);
@@ -100,6 +118,7 @@ describe('ProductService', () => {
     const updateProductDto: UpdateProductDto = {
       ...menuProductsMocked[0],
     };
+    repository.updateProduct.mockResolvedValue(menuProductsMocked[0]);
     const product = await service.update(id, updateProductDto);
 
     expect(repository.updateProduct).toHaveBeenCalledTimes(1);
@@ -109,6 +128,7 @@ describe('ProductService', () => {
   });
 
   it('should remove and return one product', async () => {
+    repository.deleteProduct.mockResolvedValue(menuProductsMocked[0]);
     const product = await service.remove(menuProductsMocked[0].id);
 
     expect(repository.deleteProduct).toHaveBeenCalledTimes(1);
