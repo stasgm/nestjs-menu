@@ -8,5 +8,6 @@
 
 ## todo
 
-* body validation
+* all controllers body validation
+* error handler if no database connection
   

@@ -5,14 +5,14 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 
-import { ProductsRepository } from '../products.repository';
+import { ProductsService } from '../products.service';
 
 @ValidatorConstraint({ name: 'ProductNotExists', async: true })
 export class ProductNotExistsRule implements ValidatorConstraintInterface {
-  constructor(private readonly repository: ProductsRepository) {}
+  constructor(private readonly service: ProductsService) {}
 
   async validate(name: string) {
-    const product = await this.repository.getProductByName(name);
+    const product = await this.service.findByName(name);
     return !product;
   }
 

@@ -19,19 +19,6 @@ describe('ProductService', () => {
       .overrideProvider(ProductsRepository)
       .useValue(mockDeep<ProductsRepository>())
       .compile();
-    // .useMocker((token) => {
-    //   if (token === ProductsRepository) {
-    //     return {
-    //       getProduct: jest.fn().mockResolvedValue(mockedProducts[0]),
-    //       getProducts: jest.fn().mockResolvedValue(mockedProducts),
-    //       createProduct: jest.fn().mockResolvedValue(mockedProducts[0]),
-    //       updateProduct: jest.fn().mockResolvedValue(mockedProducts[0]),
-    //       deleteProduct: jest.fn().mockResolvedValue(mockedProducts[0]),
-    //     };
-    //   }
-    //   return {};
-    // })
-    // .compile();
 
     service = module.get(ProductsService);
     repository = module.get(ProductsRepository);
@@ -60,16 +47,6 @@ describe('ProductService', () => {
     expect(product).toBeDefined();
     expect(product?.id).toEqual(mockedProducts[0].id);
   });
-
-  // it('should not find by id and throw a ProductNotFoundException', async () => {
-  //   repository.getProduct.mockResolvedValue(null);
-  //   const product = await service.findById(mockedProducts[0].id);
-
-  //   expect(repository.getProduct).toHaveBeenCalledTimes(1);
-  //   expect(typeof product).toBe('object');
-  //   expect(product).toBeDefined();
-  //   expect(product?.id).toEqual(mockedProducts[0].id);
-  // });
 
   it('should find by name and return a product', async () => {
     repository.getProduct.mockResolvedValue(mockedProducts[0]);

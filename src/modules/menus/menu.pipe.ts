@@ -10,7 +10,7 @@ export class MenuPipe implements PipeTransform<CreateMenuDto, Promise<CreateMenu
 
   async transform(value: CreateMenuDto): Promise<CreateMenuDto> {
     for (const line of value.lines) {
-      const product = await this.productsService.findOne(line.productId);
+      const product = await this.productsService.findById(line.productId);
       if (!product) {
         throw new BadRequestException(`${this.errorString}: product with id '${line.productId}' doesn't exist`);
       }
