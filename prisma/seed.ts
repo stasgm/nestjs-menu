@@ -1,8 +1,16 @@
 /* eslint-disable no-console */
 import { PrismaClient } from '@prisma/client';
 
+import { AppConfig } from '../src/modules/core/app-config';
+
 // initialize Prisma Client
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: new AppConfig().postgresUrl,
+    },
+  },
+});
 
 async function main() {
   // create products

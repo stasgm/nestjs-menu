@@ -5,6 +5,7 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './exceptions/prisma-client-exception/prisma-client-exception.filter';
 import { AppConfig } from './modules/core/app-config';
+import { PrismaService } from './modules/core/prisma/prisma.service';
 import setupSwagger from './modules/core/setup-swagger';
 
 async function bootstrap(): Promise<string> {
@@ -35,6 +36,8 @@ async function bootstrap(): Promise<string> {
 
   setupSwagger(app);
 
+  const prismaService = app.get(PrismaService);
+  await prismaService.enableShutdownHooks(app);
   await app.listen(port);
 
   return `
@@ -49,10 +52,13 @@ async function bootstrap(): Promise<string> {
 }
 
 (async () => {
+  const logger = new Logger('Bootstrap');
   try {
-    const url = await bootstrap();
-    Logger.log(url, 'Bootstrap');
+    const msg = await bootstrap();
+    logger.log(msg);
   } catch (error) {
-    Logger.error(error, 'Bootstrap');
+    // eslint-disable-next-line no-console
+    console.error(error);
+    logger.error(error);
   }
 })();

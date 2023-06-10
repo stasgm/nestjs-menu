@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+
+  postgres:
+    image: postgres:13.5
+    restart: always
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: 1234
+    networks:
+      - postgres
+    volumes:
+      - postgres-test-data:/var/lib/postgresql/data
+    ports:
+      - '5434:5432'
+
+volumes:
+  postgres-test-data:
+
+networks:
+  postgres:
+    driver: bridge

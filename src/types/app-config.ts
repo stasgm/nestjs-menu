@@ -1,8 +1,9 @@
 export type PGCredentials = {
   host: string;
   port: number;
-  user: string;
   dbname: string;
+  user?: string;
+  password?: string;
 };
 
 export interface IAppConfig {

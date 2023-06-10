@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as config from 'config';
 
+// import config from 'config';
 import { PGCredentials } from '../../types';
 
 @Injectable()
@@ -9,14 +10,21 @@ export class AppConfig {
     return config.get('envPrefix');
   }
 
-  get postgres(): PGCredentials {
+  get postgresUrl(): string {
+    const { dbname, host, port, password, user } = this.postgres;
+
+    return `postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`;
+  }
+
+  get postgres(): Required<PGCredentials> {
     const postgres: Record<string, unknown> = config.has('postgres') ? config.get('postgres') : {};
 
     return {
-      host: (postgres.host || process.env.POSTGRES_HOST) as string,
-      port: (postgres.port || process.env.POSTGRES_PORT) as number,
+      host: postgres.host as string,
+      port: postgres.port as number,
+      dbname: postgres.dbname as string,
       user: (postgres.user || process.env.POSTGRES_USER) as string,
-      dbname: (postgres.dbname || process.env.POSTGRES_DB) as string,
+      password: (postgres.password || process.env.POSTGRES_PASSWORD) as string,
     };
   }
 

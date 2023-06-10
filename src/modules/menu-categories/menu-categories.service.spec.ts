@@ -10,7 +10,11 @@ describe('MenuCategoriesService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [MenuCategoriesService, MenuCategoryRepository, PrismaService],
-    }).compile();
+    })
+      .useMocker(() => {
+        return {};
+      })
+      .compile();
 
     service = module.get<MenuCategoriesService>(MenuCategoriesService);
   });
