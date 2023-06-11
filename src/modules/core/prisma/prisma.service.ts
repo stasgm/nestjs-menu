@@ -54,13 +54,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   async cleanDatabase() {
     if (this.appConfig.envPrefix !== 'test') return;
 
-    // const models = Reflect.ownKeys(this).filter((key) => key[0] !== '_');
-
     const models = Prisma.dmmf.datamodel.models;
-    // eslint-disable-next-line no-console
-    // console.log(JSON.stringify());
 
-    // eslint-disable-next-line security/detect-object-injection
     return Promise.all(models.map((model) => this[model.name].deleteMany()));
   }
 
