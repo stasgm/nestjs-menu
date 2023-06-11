@@ -1,18 +1,23 @@
 version: '3.8'
 services:
 
-  postgres:
+  postgres_dev:
     image: postgres:13.5
     restart: always
     environment:
       POSTGRES_DB: devdb
       POSTGRES_USER: dev_user
       POSTGRES_PASSWORD: 1234
+    networks:
+      - postgres_test
     volumes:
       - postgres-dev-data:/var/lib/postgresql/data
     ports:
       - '5433:5432'
 
 volumes:
-  postgres:
-    name: postgres-dev-data
+  postgres-dev-data:
+
+networks:
+  postgres_test:
+    driver: bridge

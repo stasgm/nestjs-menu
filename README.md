@@ -8,6 +8,15 @@
 
 ## todo
 
-* all controllers body validation
+* add for all controllers body validation
 * error handler if no database connection
+
+
+## dev env
+
+* dev-env:pretest:int - start a docker postgres db container and migrate dev database
+  
+## test env
+
+* t-env:init - start docker postgres db container and init test database
   

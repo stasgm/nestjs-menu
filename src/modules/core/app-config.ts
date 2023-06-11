@@ -14,7 +14,7 @@ export class AppConfig {
     const { dbname, host, port, password, user } = this.postgres;
 
     // eslint-disable-next-line no-console
-    // console.log(`postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`);
+    console.log(`postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`);
     return `postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`;
   }
 
