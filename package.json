@@ -25,7 +25,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "yarn t-env jest --config ./test/jest-e2e.json",
     "t-env:test": "yarn t-env jest",
     "t-env:test:int": "yarn t-env jest -i --no-cache --config jest-int.json",
     "t-env:pretest:int": "yarn t-env:db:restart && yarn t-env:db-migrate && yarn t-env:db-seed",

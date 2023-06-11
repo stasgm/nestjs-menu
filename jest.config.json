@@ -8,7 +8,7 @@
   "modulePaths": [
     "<rootDir>"
   ],
-  "testRegex": ".*\\.spec\\.ts$",
+  "testRegex": ".*\\.*spec\\.ts$",
   "transform": {
     "^.+\\.(ts|js)?$": [
       "@swc/jest"
