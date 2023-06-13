@@ -15,8 +15,20 @@
     ]
   },
   "collectCoverageFrom": [
-    "**/*.(t|j)s"
+    "src/**/*.(t|j)s"
   ],
-  "coverageDirectory": "../coverage",
+  "coveragePathIgnorePatterns": [
+    "app-config.ts",
+    "setup-swagger.ts",
+    "node_modules",
+    "test-config",
+    "interfaces",
+    "jestGlobalMocks.ts",
+    ".module.ts",
+    "<rootDir>/src/main.ts",
+    ".mock.ts"
+  ],
+  "coverageDirectory": "<rootDir>/coverage",
+  "reporters": [ "default", "jest-junit" ],
   "testEnvironment": "node"
 }
