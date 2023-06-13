@@ -11,5 +11,6 @@ describe('Tests', () => {
   it.todo('should be todo');
   it.failing('should be failing', async () => {
     //
+    expect(true).toBeFalsy();
   });
 });
