@@ -8,7 +8,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { mockedProducts } from './products.mock';
 import { ProductsRepository } from './products.repository';
 
-describe(`ProductsRepository`, () => {
+describe('ProductsRepository', () => {
   let repository: ProductsRepository;
   let prismaService: DeepMockProxy<PrismaClient>;
 

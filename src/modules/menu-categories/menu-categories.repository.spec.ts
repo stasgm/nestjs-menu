@@ -5,7 +5,7 @@ import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { MenuCategoryRepository } from './menu-categories.repository';
 
-describe(`MenuCategoryRepository`, () => {
+describe('MenuCategoryRepository', () => {
   let menuCategoryRepository: MenuCategoryRepository;
   let prismaService: DeepMockProxy<PrismaClient>;
 
@@ -21,7 +21,7 @@ describe(`MenuCategoryRepository`, () => {
     prismaService = module.get(PrismaService);
   });
 
-  describe(`createMenuCategory`, () => {
+  describe('createMenuCategory', () => {
     it(`should create a new menu category`, async () => {
       const mockedMenuCategory = {
         id: 1,

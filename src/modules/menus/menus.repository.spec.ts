@@ -6,7 +6,7 @@ import { PrismaService } from '../core/prisma/prisma.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { MenuRepository } from './menus.repository';
 
-describe(`MenuRepository`, () => {
+describe('MenuRepository', () => {
   let menuRepository: MenuRepository;
   let prismaService: DeepMockProxy<PrismaClient>;
 
