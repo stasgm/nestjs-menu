@@ -8,10 +8,7 @@ describe('Tests', () => {
     //
   });
 
-  it.todo('should be todo', async () => {
-    //
-  });
-
+  it.todo('should be todo');
   it.failing('should be failing', async () => {
     //
   });
