@@ -13,8 +13,10 @@ export class AppConfig {
   get postgresUrl(): string {
     const { dbname, host, port, password, user } = this.postgres;
 
-    // eslint-disable-next-line no-console
-    console.log(`postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`);
+    if (this.envPrefix !== 'test') {
+      // eslint-disable-next-line no-console
+      console.log(`postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`);
+    }
     return `postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`;
   }
 
@@ -22,9 +24,9 @@ export class AppConfig {
     const postgres: Record<string, unknown> = config.has('postgres') ? config.get('postgres') : {};
 
     return {
-      host: postgres.host as string,
-      port: postgres.port as number,
-      dbname: postgres.dbname as string,
+      host: (postgres.host || process.env.POSTGRES_HOST) as string,
+      port: (postgres.port || process.env.POSTGRES_PORT) as number,
+      dbname: (postgres.dbname || process.env.POSTGRES_DB) as string,
       user: (postgres.user || process.env.POSTGRES_USER) as string,
       password: (postgres.password || process.env.POSTGRES_PASSWORD) as string,
     };
