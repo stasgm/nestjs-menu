@@ -10,7 +10,9 @@
     "node": ">=18.10.0"
   },
   "scripts": {
-    "build": "nest build",
+    "build": "yarn clear-dist && nest build",
+    "check": "tsc --noemit",
+    "clear-dist": "rimraf ./dist",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -57,6 +59,7 @@
     "generate": "npx prisma generate"
   },
   "dependencies": {
+    "@nestjs/cli": "^9.5.0",
     "@nestjs/common": "^9.4.2",
     "@nestjs/core": "^9.4.2",
     "@nestjs/mapped-types": "*",
@@ -73,10 +76,12 @@
     "prisma": "^4.15.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "swagger-ui-express": "^4.6.3"
+    "swagger-ui-express": "^4.6.3",
+    "typescript": "^5.0.4",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "^9.5.0",
     "@nestjs/schematics": "^9.2.0",
     "@nestjs/testing": "^9.4.2",
     "@types/config": "^3.3.0",
@@ -102,9 +107,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "29.1.0",
     "ts-loader": "^9.4.3",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "4.2.0",
-    "typescript": "^5.0.4"
+    "tsconfig-paths": "4.2.0"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
