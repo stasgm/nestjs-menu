@@ -24,17 +24,17 @@ pipeline {
     }
     stage('Run unit tests') {
       steps {
-        sh 'yarn t-env:test:ci:cov'
+        sh './scripts/run_unit_tests.sh'
       }
     }
     stage('Run integration tests') {
       steps {
-        sh 'yarn t-env:test:int'
+        sh './scripts/run_int_tests.sh'
       }
     }
     stage('Run e2e tests') {
       steps {
-        sh 'yarn t-env:test:e2e'
+        sh './scripts/run_e2e_tests.sh'
       }
     }
   }
