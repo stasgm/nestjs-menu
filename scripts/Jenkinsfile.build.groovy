@@ -17,25 +17,12 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				sh 'docker build . -t stanislau2020/nestjs-menu:latest'
-			}
-		}
-		stage('Login') {
-			steps {
-				// script {
-				// 	docker.withRegistry( '', 'dockerhub-cred' ) {
-				// 		dockerImage.push()
-				// 	}
-				// }
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh './scripts/publish/build.sh'
 			}
 		}
 		stage('Push'){
 			steps{
-				sh 'docker push stanislau2020/nestjs-menu:latest'
-				// withCredentials([usernamePassword(credentialsId: 'docker_token', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-				// sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-				// }
+        sh './scripts/publish/push.sh'
 			}
 		}
 	}

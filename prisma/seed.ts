@@ -1,31 +1,50 @@
-/* eslint-disable no-console */
+// import { faker } from '@faker-js/faker';
 import { PrismaClient } from '@prisma/client';
 
-import { AppConfig } from '../src/modules/core/app-config';
+import { getPrismaDataSource } from '../src/modules/core/prisma/prisma.service';
 
 // initialize Prisma Client
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: new AppConfig().postgresUrl,
-    },
-  },
-});
+const prisma = new PrismaClient({ ...getPrismaDataSource() });
+
+// function* makeRangeIterator(start = 0, end = Number.POSITIVE_INFINITY, step = 1) {
+//   let iterationCount = 0;
+//   for (let i = start; i < end; i += step) {
+//     iterationCount++;
+//     yield i;
+//   }
+//   return iterationCount;
+// }
 
 async function main() {
   // create products
-  const product1 = await prisma.product.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      id: 1,
-      name: 'Milk',
-      description: 'Good to drink it',
-      disabled: false,
-    },
-  });
 
-  const product2 = await prisma.product.upsert({
+  await prisma.menu.deleteMany();
+  await prisma.menuCategory.deleteMany();
+  await prisma.product.deleteMany();
+
+  // const amountOfProducts = 20;
+
+  // const products = Array.from({ length: amountOfProducts })
+  //   .fill([])
+  //   .map(() => faker.commerce.product());
+
+  // const generator = makeRangeIterator(1);
+  // for await (const product of new Set(products)) {
+  //   const id = generator.next().value;
+
+  //   await prisma.product.upsert({
+  //     where: { id },
+  //     update: {},
+  //     create: {
+  //       id: id,
+  //       name: product,
+  //       description: faker.commerce.productDescription(),
+  //       disabled: false,
+  //     },
+  //   });
+  // }
+
+  await prisma.product.upsert({
     where: { id: 2 },
     update: {},
     create: {
@@ -35,7 +54,7 @@ async function main() {
     },
   });
 
-  const product3 = await prisma.product.upsert({
+  await prisma.product.upsert({
     where: { id: 3 },
     update: {},
     create: {
@@ -45,7 +64,7 @@ async function main() {
     },
   });
 
-  const product4 = await prisma.product.upsert({
+  await prisma.product.upsert({
     where: { id: 4 },
     update: {},
     create: {
@@ -56,7 +75,7 @@ async function main() {
   });
 
   // create menu categories
-  const category1 = await prisma.menuCategory.upsert({
+  await prisma.menuCategory.upsert({
     where: { id: 1 },
     update: {},
     create: {
@@ -65,7 +84,7 @@ async function main() {
     },
   });
 
-  const category2 = await prisma.menuCategory.upsert({
+  await prisma.menuCategory.upsert({
     where: { id: 2 },
     update: {},
     create: {
@@ -74,7 +93,7 @@ async function main() {
     },
   });
 
-  const category3 = await prisma.menuCategory.upsert({
+  await prisma.menuCategory.upsert({
     where: { id: 3 },
     update: {},
     create: {
@@ -84,7 +103,7 @@ async function main() {
   });
 
   // create menu 1
-  const menu1 = await prisma.menu.upsert({
+  await prisma.menu.upsert({
     where: { id: 1 },
     update: {},
     create: {
@@ -113,13 +132,13 @@ async function main() {
   });
 
   // create menu 2
-  const menu2 = await prisma.menu.upsert({
+  await prisma.menu.upsert({
     where: { id: 2 },
     update: {},
     create: {
       id: 2,
       name: 'Drinks and beverages',
-      description: 'All time',
+      description: 'All the time',
       lines: [
         {
           productId: 1,
@@ -144,15 +163,12 @@ async function main() {
       categories: { set: [{ id: 3 }] },
     },
   });
-
-  console.log({ product1, product2, product3, product4 });
-  console.log({ category1, category2, category3 });
-  console.log({ menu1, menu2 });
 }
 
 // execute the main function
 main()
   .catch((error) => {
+    // eslint-disable-next-line no-console
     console.error(error);
     // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);

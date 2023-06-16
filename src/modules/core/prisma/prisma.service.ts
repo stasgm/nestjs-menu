@@ -3,17 +3,23 @@ import { Prisma, PrismaClient } from '@prisma/client';
 
 import { AppConfig } from '../app-config';
 
+export const getPrismaDataSource = () => {
+  return {
+    datasources: {
+      db: {
+        url: new AppConfig().postgresUrl,
+      },
+    },
+  };
+};
+
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   private readonly logger = new Logger(PrismaService.name);
 
   constructor(private appConfig: AppConfig) {
     super({
-      datasources: {
-        db: {
-          url: new AppConfig().postgresUrl,
-        },
-      },
+      ...getPrismaDataSource(),
       log: [
         {
           emit: 'event',

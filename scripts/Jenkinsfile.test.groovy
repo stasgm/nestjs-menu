@@ -18,27 +18,27 @@ pipeline {
     }
     stage('Install dependencies') {
       steps {
-        sh './scripts/install.sh'
+        sh './scripts/test/install.sh'
       }
     }
     stage('Migrate and seed the database') {
       steps {
-        sh './scripts/prepare_db.sh'
+        sh './scripts/test/prepare_db.sh'
       }
     }
     stage('Run unit tests') {
       steps {
-        sh './scripts/run_unit_tests.sh'
+        sh './scripts/test/run_unit_tests.sh'
       }
     }
     stage('Run integration tests') {
       steps {
-        sh './scripts/run_int_tests.sh'
+        sh './scripts/test/run_int_tests.sh'
       }
     }
     stage('Run e2e tests') {
       steps {
-        sh './scripts/run_e2e_tests.sh'
+        sh './scripts/test/run_e2e_tests.sh'
       }
     }
   }
