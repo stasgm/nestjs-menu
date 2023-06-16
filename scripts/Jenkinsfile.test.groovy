@@ -1,5 +1,9 @@
 pipeline {
   agent any
+  tools {
+    nodejs "nodejs18"
+  }
+
   options {
     // This is required if you want to clean before build
     skipDefaultCheckout(true)
