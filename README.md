@@ -8,10 +8,11 @@
 
 ## todo
 
-* add for all controllers body validation
-* error handler if no database connection
-* dockerize tests
-* use .env for test enviroment. ip issue
+[ ] add for all controllers body validation
+[ ] handler errors if no database connection
+[ ] dockerize tests
+[ ] use .env for test enviroment. hardcoded ip issue
+[ ] add logging tool instead of console.log
 
 ## dev env
 
