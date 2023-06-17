@@ -9,7 +9,7 @@ then
 fi
 
 # push image
-docker build . -t stanislau2020/nestjs-menu:latest
+docker push stanislau2020/nestjs-menu:latest
 
 if [ $? -ne 0 ]
 then
