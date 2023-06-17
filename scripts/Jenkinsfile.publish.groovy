@@ -28,7 +28,7 @@ pipeline {
 	}
 	post {
 		always {
-			sh 'docker logout'
+      sh './scripts/publish/finalize.sh'
 		}
 	}
 }
