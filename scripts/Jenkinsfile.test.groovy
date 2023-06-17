@@ -44,6 +44,7 @@ pipeline {
   }
   post {
     always {
+      su 'yarn test-env:db:stop'
       junit 'junit.xml'
     }
   }
