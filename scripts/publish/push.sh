@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # login
-docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
 if [ $? -ne 0 ]
 then
    echo "An error occurred during docker log in."
