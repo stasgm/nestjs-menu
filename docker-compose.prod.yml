@@ -5,7 +5,7 @@ services:
     stdin_open: true
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: menu-prod-api
     hostname: menu-api
     env_file:
@@ -15,7 +15,6 @@ services:
     restart: always
     networks:
       - menu-prod
-
   # nginx:
   #   build:
   #     context: front
