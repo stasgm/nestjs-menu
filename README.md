@@ -19,5 +19,5 @@
   
 ## test env
 
-* t-env:init - start docker postgres db container and init test database
+* test-env:init - start docker postgres db container and init test database
   

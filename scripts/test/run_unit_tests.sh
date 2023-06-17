@@ -1,3 +1,3 @@
 #!/bin/bash
 
-yarn t-env:test:ci:cov
+yarn test-env:test:ci:cov

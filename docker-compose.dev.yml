@@ -1,6 +1,6 @@
 version: '3.8'
-services:
 
+services:
   postgres_dev:
     image: postgres:13.5
     restart: always
@@ -17,6 +17,7 @@ services:
 
 volumes:
   postgres-dev-data:
+
 
 networks:
   postgres_test:

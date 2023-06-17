@@ -1,3 +1,3 @@
 #!/bin/bash
 
-yarn t-env:test:int
+yarn test-env:test:int

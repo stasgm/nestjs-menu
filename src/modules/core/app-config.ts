@@ -23,6 +23,9 @@ export class AppConfig {
   get postgres(): Required<PGCredentials> {
     const postgres: Record<string, unknown> = config.has('postgres') ? config.get('postgres') : {};
 
+    // eslint-disable-next-line no-console
+    console.log('postgres.host', postgres.host);
+
     return {
       host: (postgres.host || process.env.POSTGRES_HOST) as string,
       port: (postgres.port || process.env.POSTGRES_PORT) as number,
