@@ -40,3 +40,6 @@ lerna-debug.log*
 
 # reports
 junit.xml
+
+# ci/cd
+.groovylintrc.json
