@@ -1,5 +1,6 @@
 /* eslint-disable jest/no-disabled-tests */
 describe('Tests', () => {
+  // eslint-disable-next-line jest/no-commented-out-tests
   // it('should fail', async () => {
   //   expect(true).toBeFalsy();
   // });

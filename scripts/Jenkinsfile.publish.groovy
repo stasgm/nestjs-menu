@@ -15,6 +15,11 @@ pipeline {
 				git url: 'https://github.com/stasgm/nestjs-menu.git'
 			}
 		}
+		stage('Validate') {
+			steps {
+				sh './scripts/publish/validate.sh'
+			}
+		}
 		stage('Build') {
 			steps {
 				sh './scripts/publish/build.sh'
