@@ -5,7 +5,7 @@ const config: IAppConfig = {
   nestPort: 3000,
   postgres: {
     dbname: 'testdb',
-    host: '192.168.100.9',
+    host: 'localhost',
     port: 5434,
     user: 'test_user',
     password: '1234',
