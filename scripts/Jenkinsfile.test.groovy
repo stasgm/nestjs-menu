@@ -9,11 +9,6 @@ pipeline {
         skipDefaultCheckout(true)
     }
     stages {
-        stage('Validate') {
-            steps {
-                sh './scripts/test/validate.sh'
-            }
-        }
         stage('Cloning git repo') {
             steps {
                 cleanWs()
@@ -24,6 +19,11 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 sh './scripts/test/install.sh'
+            }
+        }
+        stage('Validate') {
+            steps {
+                sh './scripts/test/validate.sh'
             }
         }
         stage('Migrate and seed the database') {
