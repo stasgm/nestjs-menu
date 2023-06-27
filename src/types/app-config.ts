@@ -10,4 +10,5 @@ export interface IAppConfig {
   envPrefix: string;
   nestPort: number;
   postgres?: PGCredentials;
+  dbConnectionMaxAttempts?: number;
 }

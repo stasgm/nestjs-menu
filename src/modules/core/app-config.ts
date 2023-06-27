@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import config from 'config';
 
-// import config from 'config';
 import { PGCredentials } from '../../types';
 
 @Injectable()
 export class AppConfig {
   get envPrefix(): string {
     return config.get('envPrefix');
+  }
+
+  get isProduction(): boolean {
+    return this.envPrefix === 'production';
   }
 
   get postgresUrl(): string {
@@ -18,6 +21,13 @@ export class AppConfig {
       console.log(`postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`);
     }
     return `postgresql://${user}:${password}@${host}:${port}/${dbname}?schema=public`;
+  }
+
+  get dbConnectAttempts(): number {
+    const defaultDbConnectionMaxAttempts = 3;
+    return config.has('dbConnectionMaxAttempts')
+      ? config.get<number>('dbConnectionMaxAttempts')
+      : defaultDbConnectionMaxAttempts;
   }
 
   get postgres(): Required<PGCredentials> {
