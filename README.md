@@ -1,6 +1,6 @@
-# nestjs-test-1
+# nestjs-menu
 
-## Local development environment (Feature branch) steps
+## Local development environment steps
 
 1. create or update models in schema.prisma
 2. run `npx prisma migrate dev` - to sync your Prisma schema with the database schema of your local development database.
