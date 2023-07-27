@@ -7,7 +7,6 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint/eslint-plugin',
-    '@typescript-eslint/eslint-plugin',
     'simple-import-sort',
     'security',
     'sonarjs',
@@ -38,7 +37,6 @@ module.exports = {
     'unicorn/no-null': 'off',
     'jest/expect-expect': 'off',
     'unicorn/prefer-top-level-await': 'off',
-    '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/no-explicit-any': ['error'],
     'security/detect-possible-timing-attacks': 'off',
